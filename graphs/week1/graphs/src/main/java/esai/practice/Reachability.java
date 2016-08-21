@@ -17,8 +17,31 @@ public class Reachability
         this.graph = graph;
     }
 
+    private int connectedComponents = 0;
+
+    public int getConnectedComponents(int from, int to){
+        sortThatShit(from);
+        int reached = from;
+        for (VerticeEdges verticeEdge : sortedGraph){
+            int got = verticeEdge.isFrom(reached);
+            if(got==-1){
+                break;
+            }
+            connectedComponents++;
+            if(got==to){
+                break;
+            }
+            reached=got;
+        }
+        return connectedComponents;
+    }
+
     public boolean reach(int x, int y) {
         sortThatShit(x);
+
+        return isReachable(x, y);
+    }
+    public boolean isReachable(int x, int y){
         int reached = x;
         boolean isReachable = false;
         for (VerticeEdges verticeEdge : sortedGraph){
@@ -33,6 +56,7 @@ public class Reachability
         }
         return isReachable;
     }
+
     //not sorted list
     public void sortThatShit(int from){
         VerticeEdges got;
